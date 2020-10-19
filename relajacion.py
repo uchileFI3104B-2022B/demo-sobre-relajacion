@@ -13,7 +13,7 @@ from mpl_toolkits.mplot3d import axes3d
 
 
 def muestra_phi(phi, precision=3):
-    with np.printoptions(precision=precision, suppress=True): 
+    with np.printoptions(precision=precision, suppress=True):
         print(phi[::-1, :])
 
 
@@ -33,10 +33,11 @@ def convergio(phi, phi_anterior, rtol=0.1):
 def una_iteracion(phi, N_pasos, h, w=1):
     for i in range(1, N_pasos-1):
         for j in range(1, N_pasos-1):
-            phi[i, j] = (1-w) * phi[i, j] + w / 4 * (phi[i+1, j] + phi[i-1, j] +
-                                                    phi[i, j+1] + phi[i, j-1] -
-                                                    h**2 * rho(i, j, h))
+            phi[i, j] = (1-w) * phi[i, j] + w/4 * (phi[i+1, j] + phi[i-1, j] +
+                                                   phi[i, j+1] + phi[i, j-1] -
+                                                   h**2 * rho(i, j, h))
     return phi
+
 
 # Setup
 Lx = Ly = 2
