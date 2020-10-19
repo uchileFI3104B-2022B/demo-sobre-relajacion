@@ -16,6 +16,14 @@ def rho(i, j, h):
     return -2 * (2 - x_i**2 - y_j**2)
 
 
+def una_iteracion(phi, N_pasos, h, w=1):
+    for i in range(1, N_pasos-1):
+        for j in range(1, N_pasos-1):
+            phi[i, j] = (1-w) * phi[i, j] + w / 4 * (phi[i+1, j] + phi[i-1, j] +
+                                                    phi[i, j+1] + phi[i, j-1] -
+                                                    h**2 * rho(i, j, h))
+    return phi
+
 # Setup
 Lx = Ly = 2
 N_pasos = 5
@@ -24,8 +32,5 @@ w = 1
 
 phi = np.zeros((N_pasos, N_pasos))
 
-for i in range(1, N_pasos-1):
-    for j in range(1, N_pasos-1):
-        phi[i, j] = (1-w) * phi[i, j] + w / 4 * (phi[i+1, j] + phi[i-1, j] +
-                                                 phi[i, j+1] + phi[i, j-1] -
-                                                 h**2 * rho(i, j, h))
+una_iteracion(phi, N_pasos, h, w=1)
+    
