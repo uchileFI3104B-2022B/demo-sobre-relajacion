@@ -38,23 +38,23 @@ def una_iteracion(phi, N_pasos, h, w=1):
 
 # Setup
 Lx = Ly = 2
-N_pasos = 5
+N_pasos = 21
 h = Lx / (N_pasos - 1)
-w = 1
+w = 1.8  # Parametro de sobre-relajacion
 
 phi = np.zeros((N_pasos, N_pasos))
 
+# Iteracion
 phi = una_iteracion(phi, N_pasos, h, w=w)
 phi_anterior = phi.copy()
 phi = una_iteracion(phi, N_pasos, h, w=w)
 
-
-
-
 counter = 2
-while not convergio(phi, phi_anterior, rtol=0.1):
+while not convergio(phi, phi_anterior, rtol=1e-10) and counter < 2000:
     phi_anterior = phi.copy()
-    phi = una_iteracion(phi, N_pasos, h, w=1)
+    phi = una_iteracion(phi, N_pasos, h, w=w)
     counter += 1
 
-# while (phi_anterior - phi) / phi_anterior > rtol
+print("counter = {}".format(counter))
+i_central = int((N_pasos-1) / 2)
+print("phi(0, 0) = {}".format(phi[i_central, i_central]))
