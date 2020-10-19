@@ -10,6 +10,11 @@ Utiliza el metodo de la sobre-relajacion sucesiva.
 import numpy as np
 
 
+def muestra_phi(phi, precision=3):
+    with np.printoptions(precision=precision, suppress=True): 
+        print(phi[::-1, :])
+
+
 def rho(i, j, h):
     x_i = -1 + h * i
     y_j = -1 + h * j
