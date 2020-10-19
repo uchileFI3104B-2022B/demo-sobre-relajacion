@@ -8,6 +8,8 @@ Utiliza el metodo de la sobre-relajacion sucesiva.
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d
 
 
 def muestra_phi(phi, precision=3):
@@ -38,7 +40,7 @@ def una_iteracion(phi, N_pasos, h, w=1):
 
 # Setup
 Lx = Ly = 2
-N_pasos = 21
+N_pasos = 31
 h = Lx / (N_pasos - 1)
 w = 1.8  # Parametro de sobre-relajacion
 
@@ -58,3 +60,22 @@ while not convergio(phi, phi_anterior, rtol=1e-10) and counter < 2000:
 print("counter = {}".format(counter))
 i_central = int((N_pasos-1) / 2)
 print("phi(0, 0) = {}".format(phi[i_central, i_central]))
+
+plt.figure(1)
+plt.clf()
+
+plt.imshow(phi, origin='bottom', extent=[-1, 1, -1, 1])
+plt.contour(phi, origin='lower', extent=[-1, 1, -1, 1], colors='k')
+
+
+fig = plt.figure(2)
+fig.clf()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-1, 1, N_pasos)
+y = np.linspace(-1, 1, N_pasos)
+X, Y = np.meshgrid(x, y)
+
+ax.plot_surface(X, Y, phi, rstride=1, cstride=1)
+
+plt.show()
