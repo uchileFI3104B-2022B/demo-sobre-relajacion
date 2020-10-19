@@ -21,6 +21,13 @@ def rho(i, j, h):
     return -2 * (2 - x_i**2 - y_j**2)
 
 
+def convergio(phi, phi_anterior, rtol=0.1):
+    not_zero = phi_anterior != 0
+    dif_relativa = ((phi_anterior[not_zero] - phi[not_zero]) /
+                    phi_anterior[not_zero])
+    return np.fabs(dif_relativa).max() < rtol
+
+
 def una_iteracion(phi, N_pasos, h, w=1):
     for i in range(1, N_pasos-1):
         for j in range(1, N_pasos-1):
@@ -37,5 +44,17 @@ w = 1
 
 phi = np.zeros((N_pasos, N_pasos))
 
-una_iteracion(phi, N_pasos, h, w=1)
-    
+phi = una_iteracion(phi, N_pasos, h, w=w)
+phi_anterior = phi.copy()
+phi = una_iteracion(phi, N_pasos, h, w=w)
+
+
+
+
+counter = 2
+while not convergio(phi, phi_anterior, rtol=0.1):
+    phi_anterior = phi.copy()
+    phi = una_iteracion(phi, N_pasos, h, w=1)
+    counter += 1
+
+# while (phi_anterior - phi) / phi_anterior > rtol
